@@ -13,6 +13,10 @@ import {
   View
 } from 'react-native';
 
+import {Provider} from 'react-redux'
+import {createStore,applyMiddleware} from 'redux'
+import reducers from './src/reducers/index'
+const createStoreMiddleware = applyMiddleware()(createStore)
 import Router from './src/components/router'
 import Loadbar from './src/components/Loadbar'
 
@@ -21,8 +25,10 @@ export default class pdoc extends Component {
   render() {
 
     return (
+      <Provider store={createStoreMiddleware(reducers)}>
 
-      <Router/>
+        <Router/>
+    </Provider>
 
     )
   }

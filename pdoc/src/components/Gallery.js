@@ -17,8 +17,10 @@ import {
   NativeModules
 } from 'react-native';
 
+import {connect} from 'react-redux'
+import {selectedImage} from '../actions'
 
-export default class Gallery extends Component {
+class Gallery extends Component {
   constructor(props){
     super(props)
     this.state={
@@ -34,11 +36,11 @@ export default class Gallery extends Component {
       this.setState({
         selectedImage:uri,
       });
-
+      this.props.selectedImage(uri)
       this.props.navigator.push({name:'profile'})
   }
   componentWillMount(){
-    CameraRoll.getPhotos({first:40}).done(
+    CameraRoll.getPhotos({first:25}).done(
       (data) => {
         const assets = data.edges
         const images = assets.map(asset => asset.node.image)
@@ -71,6 +73,14 @@ export default class Gallery extends Component {
   }
 }
 
+
+const dispatchToProp = (dispatch) => {
+  return{
+    selectedImage : (x) => dispatch(selectedImage(x))
+  }
+}
+
+export default connect(null,dispatchToProp)(Gallery)
 const styles = StyleSheet.create({
   container: {
     flex: 1,

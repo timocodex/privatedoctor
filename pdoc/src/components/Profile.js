@@ -21,6 +21,9 @@ import {
 
 import Swiper from 'react-native-swiper';
 
+import {connect} from 'react-redux'
+
+
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon,Item,Input, Card, CardItem, Thumbnail } from 'native-base'
     let data = {hemoglobin:12.6,Hematokrit:38,leukosit:7.96,trombosit:211,eritrosit:4.3}
 
@@ -30,10 +33,10 @@ import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Rig
     const itemWidth = slideWidth + horizontalMargin * 2;
 
 
-export default class Profile extends Component {
+class Profile extends Component {
 
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     const width = this.getWidth(data)
     console.log(width);
     this.state = {
@@ -78,7 +81,7 @@ export default class Profile extends Component {
         <Container >
            <Content>
              <View style={{alignItems:'center',justifyContent:'center',backgroundColor:'#A2214B',height:200}}>
-              <Thumbnail style={{width: 100, height: 100, borderRadius: 50}} source={{uri:'https:\/\/fifa17.content.easports.com\/fifa\/fltOnlineAssets\/CC8267B6-0817-4842-BB6A-A20F88B05418\/2017\/fut\/items\/images\/players\/html5\/120x120\/158023.png'}} />
+              <Thumbnail style={{width: 100, height: 100, borderRadius: 50}} source={{uri:this.props.profile}} />
               <Text style={{color:'white',marginTop:10, fontFamily:'sans-serif-condensed',fontSize:10}}>FC BARCELONA</Text>
               <Text style={{color:'white',fontFamily:'sans-serif-condensed',fontSize:18}}>Lionel Messi</Text>
              </View>
@@ -134,6 +137,9 @@ export default class Profile extends Component {
                       <TouchableHighlight style={{backgroundColor:'lightblue',borderRadius:30,height:30,width:100,alignItems:'center',justifyContent:'center'}} onPress={() => {this.props.navigator.push({name:'gallery'})}}>
                         <Text>Open Gallery</Text>
                       </TouchableHighlight>
+                      <TouchableHighlight style={{margin:10,backgroundColor:'lightblue',borderRadius:30,height:30,width:100,alignItems:'center',justifyContent:'center'}} onPress={() => {this.props.navigator.push({name:'camera'})}}>
+                        <Text>Open Camera</Text>
+                      </TouchableHighlight>
                     </View>
                   </View>
                   <View style={styles.slide3}>
@@ -149,6 +155,14 @@ export default class Profile extends Component {
        );
   }
 }
+
+const stateToProp = (state) => {
+  return {
+    profile: state.profile
+  }
+}
+
+export default connect(stateToProp)(Profile)
 
 const styles = StyleSheet.create({
   container: {

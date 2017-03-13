@@ -9,7 +9,7 @@ import {
 
 import Profile from './Profile'
 import Gallery from './Gallery'
-
+import Cam from './Camera'
 
 
 export default class Router extends Component {
@@ -18,6 +18,7 @@ export default class Router extends Component {
     switch(route.name){
       case 'profile' : return (<Profile route={route} navigator={navigator} />)
       case 'gallery' : return (<Gallery route={route} navigator={navigator} />)
+      case 'camera' : return (<Cam navigator={navigator}/>)
     }
 
   }
